@@ -85,6 +85,7 @@ public class umssteps {
 	@Then("user enter the {string} and {string}")
 	public void user_enter_the_and(String s1, String s2) throws InterruptedException {
 		Thread.sleep(4000);
+		//find element
 		vc.findElement(By.xpath("//input[@id='email']")).sendKeys(s1);
 		exp.createTest("User name enterd").info("login username").addScreenCaptureFromBase64String(Capsre());
 		Thread.sleep(4000);
