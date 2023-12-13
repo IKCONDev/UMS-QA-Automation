@@ -1,6 +1,10 @@
 package Stepdef;
 
+import org.openqa.selenium.support.ui.Wait;
+//import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -13,10 +17,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+//import com.thoughtworks.selenium.Wait;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,11 +33,15 @@ import java.util.Random;
 import io.cucumber.java.*;
 import io.cucumber.java.en.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
+
+//import org.openqa.selenium.support.ui.WebDriverWait;
 //import objec.UMSOBJ;
-@SuppressWarnings("deprecation")
+@SuppressWarnings({ "deprecation" })
 public class umssteps {
 	WebDriver vc;
-
+	final int zr = 20;
+	Wait<WebDriver> wait;
+	// newWebDriverWait(driver, Duration.ofSeconds(2));
 	ExtentReports exp = new ExtentReports();
 	// Generate random integers in range 0 to 999
 
@@ -58,7 +70,7 @@ public class umssteps {
 	public void Cleanup() throws IOException {
 
 		exp.flush();
-		//vc.close();
+		// vc.close();
 
 	}
 
@@ -78,18 +90,18 @@ public class umssteps {
 	public void user_open_the_url(String string) {
 		WebDriverManager.chromedriver().setup();
 		vc = new ChromeDriver();
+		wait = new WebDriverWait(vc, Duration.ofSeconds(2));
 		// lp=new UMSOBJ(vc);
 		vc.get(string);
 		vc.manage().window().maximize();
-		exp.createTest("Website").info("Website opended")
-				.addScreenCaptureFromBase64String(Capsre());
+		exp.createTest("Website").info("Website opended").addScreenCaptureFromBase64String(Capsre());
 
 	}
 
 	@Then("user enter the {string} and {string}")
 	public void user_enter_the_and(String s1, String s2) throws InterruptedException {
 		Thread.sleep(4000);
-		//find element
+		// find element
 		vc.findElement(By.xpath("//input[@id='email']")).sendKeys(s1);
 		exp.createTest("User name enterd").info("login username").addScreenCaptureFromBase64String(Capsre());
 		Thread.sleep(4000);
@@ -104,7 +116,6 @@ public class umssteps {
 
 	}
 
-	
 	@When("user clear the authentication")
 	public void user_clear_the_authentication() {
 		vc.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -136,7 +147,6 @@ public class umssteps {
 		vc.findElement(By.xpath("//div[contains(text(),'Meetings')]")).click();
 	}
 
-	
 	@Then("Create the manual meeting {string}")
 	public void create_the_manual_meeting(String mt) throws InterruptedException {
 		Thread.sleep(4000);
@@ -212,7 +222,8 @@ public class umssteps {
 				.xpath("//td[contains(text(),'" + mt + "')]/following-sibling::td//a[contains(.,'Show Action Items')]"))
 				.click();
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//td[contains(text(),'" + At + "')]/following-sibling::td//button[@class='edit-icon']"))
+		vc.findElement(
+				By.xpath("//td[contains(text(),'" + At + "')]/following-sibling::td//button[@class='edit-icon']"))
 				.click();// editAC
 		Thread.sleep(4000);
 		WebElement UAT = vc.findElement(By.xpath("//input[@id='uAcItemTitle']"));
@@ -268,9 +279,9 @@ public class umssteps {
 		Thread.sleep(4000);
 	}
 
-	
 	@Then("Add task in action item {string} {string} {string} {string} {string}")
-	public void add_task_in_action_item(String At, String Tt, String TD, String UN,String CN) throws InterruptedException {
+	public void add_task_in_action_item(String At, String Tt, String TD, String UN, String CN)
+			throws InterruptedException {
 		vc.navigate().refresh();
 		vc.findElement(By.xpath("//div[normalize-space()='Action Items']")).click();
 		exp.createTest("Action item list").info("action item list").addScreenCaptureFromBase64String(Capsre());
@@ -279,7 +290,8 @@ public class umssteps {
 				.xpath("//td[normalize-space()='" + At + "']/following-sibling::td//a[normalize-space()='Show Tasks']"))
 				.click();// show task
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//td[normalize-space()='" + At + "']/following::td//button[normalize-space()='Add Task']"))
+		vc.findElement(
+				By.xpath("//td[normalize-space()='" + At + "']/following::td//button[normalize-space()='Add Task']"))
 				.click();// add task
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//textarea[@placeholder='Enter title !...']")).sendKeys(Tt);
@@ -289,8 +301,8 @@ public class umssteps {
 		vc.findElement(By.xpath("//ng-select[@id='taskOwner']//input[@type='text']")).click();// assginee
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//span[@class='ng-option-label'][normalize-space()='" + UN + "']")).click();
-		//Thread.sleep(4000);
-		//vc.findElement(By.xpath("//select[@id='taskCategory']")).click();
+		// Thread.sleep(4000);
+		// vc.findElement(By.xpath("//select[@id='taskCategory']")).click();
 		Thread.sleep(4000);
 		Select Cat = new Select(vc.findElement(By.xpath("//select[@id='taskCategory']")));
 		Thread.sleep(5000);
@@ -302,15 +314,14 @@ public class umssteps {
 
 	@Then("Navigate to the Action item")
 	public void navigate_to_the_action_item() throws InterruptedException {
-		Thread.sleep(4000); 
+		Thread.sleep(4000);
 		vc.navigate().refresh();
 		vc.findElement(By.xpath("//div[normalize-space()='Action Items']")).click();
 	}
 
-	
 	@Then("Navigate to Task and Edit the task in Organizer {string} {string} {string} {string} {string}")
-	public void navigate_to_task_and_edit_the_task_in_organizer(String Tt1, String UTT, String UTD, String UN,String CN)
-			throws InterruptedException {
+	public void navigate_to_task_and_edit_the_task_in_organizer(String Tt1, String UTT, String UTD, String UN,
+			String CN) throws InterruptedException {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//div[contains(text(),'Tasks')]")).click();
 		Thread.sleep(4000);
@@ -325,8 +336,8 @@ public class umssteps {
 			vc.switchTo().alert().accept();
 		} catch (Exception e) {
 		}
-		vc.findElement(By.xpath("//td[normalize-space()='" + Tt1
-				+ "']/following-sibling::td//button[@id='editIcon']")).click();
+		vc.findElement(By.xpath("//td[normalize-space()='" + Tt1 + "']/following-sibling::td//button[@id='editIcon']"))
+				.click();
 		Thread.sleep(4000);
 		WebElement TT = vc.findElement(By.xpath("//textarea[@placeholder='Enter Title']"));
 		TT.clear();
@@ -342,7 +353,8 @@ public class umssteps {
 		try {
 			vc.findElement(By.xpath("//span[normalize-space()='" + UN + "']")).click();
 		} catch (Exception e) {
-			vc.findElement(By.xpath("//span[contains(@class,'ng-option-label')][normalize-space()='" + UN + "']")).click();
+			vc.findElement(By.xpath("//span[contains(@class,'ng-option-label')][normalize-space()='" + UN + "']"))
+					.click();
 		}
 		Thread.sleep(4000);
 		Select Cat = new Select(vc.findElement(By.xpath("//select[@id='taskCategory']")));
@@ -357,11 +369,13 @@ public class umssteps {
 		status.selectByVisibleText("Yet to start");
 		try {
 			Thread.sleep(4000);
-			vc.findElement(By.xpath("(//b[contains(text(),'Status')])[1]")).click();}catch (Exception e) {
-				// TODO: handle exception
-			}
-		Actions action = new Actions(vc);
+			vc.findElement(By.xpath("(//b[contains(text(),'Status')])[1]")).click();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 		Thread.sleep(4000);
+		Actions action = new Actions(vc);
 		action.sendKeys(Keys.PAGE_DOWN);
 		Thread.sleep(4000);
 		try {
@@ -378,7 +392,6 @@ public class umssteps {
 		Thread.sleep(4000);
 	}
 
-	
 	@And("Update the Task in Assignee {string}")
 	public void Update_the_task_in_Assignee(String Tt1) throws InterruptedException {
 		Thread.sleep(4000);
@@ -402,7 +415,6 @@ public class umssteps {
 		vc.findElement(By.xpath("(//button[@type='submit' and .='Save'])[2]")).click();// save
 	}
 
-	
 	@Then("user enter the profile icon button")
 	public void user_enter_the_profile_icon_button() throws InterruptedException {
 		vc.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -425,7 +437,6 @@ public class umssteps {
 
 	}
 
-	
 	@Then("user enter the profile panel")
 	public void user_enter_the_profile_panel() throws InterruptedException {
 		vc.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -436,7 +447,6 @@ public class umssteps {
 		// vc.close();
 	}
 
-	
 	@Then("user enter the logout")
 	public void user_enter_the_logout() throws InterruptedException {
 		Thread.sleep(4000);
@@ -447,7 +457,6 @@ public class umssteps {
 		// vc.close();
 	}
 
-	
 	@And("Send the Mom mail {string}")
 	public void Send_the_Mom_mail(String Mt) throws InterruptedException {
 		Thread.sleep(4000);
@@ -462,8 +471,8 @@ public class umssteps {
 		vc.findElement(By.xpath("//ng-select[@id='sendMOM']")).click();
 		Thread.sleep(4000);
 		try {
-			vc.findElement(
-					By.xpath("//span[contains(@class,'ng-option-label')][normalize-space()='venkatesh.udaru@ikcontech.com']"))
+			vc.findElement(By.xpath(
+					"//span[contains(@class,'ng-option-label')][normalize-space()='venkatesh.udaru@ikcontech.com']"))
 					.click();
 		} catch (Exception e) {
 			vc.findElement(By.xpath("//span[normalize-space()='venkatesh.udaru@ikcontech.com']")).click();
@@ -491,7 +500,6 @@ public class umssteps {
 
 	}
 
-	
 	@Then("user enter the {string}")
 	public void user_enter_the(String string) throws InterruptedException {
 		Thread.sleep(4000);
@@ -500,7 +508,6 @@ public class umssteps {
 
 	}
 
-	
 	@Then("user enter getotp button")
 	public void user_enter_getotp_button() throws InterruptedException {
 		Thread.sleep(4000);
@@ -523,7 +530,6 @@ public class umssteps {
 
 	}
 
-	
 	@Then("user enter {string} and re enter {string}")
 	public void user_enter_and_re_enter(String string, String string1) throws InterruptedException {
 
@@ -536,39 +542,37 @@ public class umssteps {
 		// vc.close();
 	}
 
-	
 	@Then("User navigate to the settings")
 	public void user_navigate_to_the_settings() throws InterruptedException {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//div[normalize-space()='Settings']")).click();
 	}
 
-	
 	@Then("Navigate to the roles")
 	public void navigate_to_the_roles() throws InterruptedException {
+		Thread.sleep(4000);
+		vc.findElement(By.xpath("//div[normalize-space()='Settings']")).click();
 		vc.findElement(By.xpath("//a[normalize-space()='Roles']")).click();
 		Thread.sleep(4000);
 	}
 
-	
-	@Then("add the role {string}")
-	public void add_the_role(String RN) throws InterruptedException {
+	@Then("add the role {string} {string}")
+	public void add_the_role(String RN, String PN) throws InterruptedException {
 		vc.navigate().refresh();
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//p[normalize-space()='Add']")).click();
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//div[@id='createModal']//input[@id='roleName']")).sendKeys(RN);
 		Thread.sleep(4000);
-		Select per=new Select(vc.findElement(By.xpath("(//select[contains(@class,'form-control-sm')])[1]")));
+		Select per = new Select(vc.findElement(By.xpath("(//select[contains(@class,'form-control-sm')])[1]")));
 		Thread.sleep(4000);
-		per.selectByValue("1");
+		per.selectByVisibleText(PN);
 		vc.findElement(By.xpath("//div[@id='createModal']//button[@type='button'][normalize-space()='Save']")).click();
 
 	}
 
-	
-	@Then("Update the role {string}")
-	public void update_the_role(String RN) throws InterruptedException {
+	@Then("Update the role {string} {string}")
+	public void update_the_role(String RN, String PN) throws InterruptedException {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//td[normalize-space()='" + RN + "']/following-sibling::td//button[@id='editIcon']"))
 				.click();
@@ -577,9 +581,9 @@ public class umssteps {
 		aa.clear();
 		aa.sendKeys(RN);
 		Thread.sleep(4000);
-		Select per=new Select(vc.findElement(By.xpath("(//select[@id='permissions'])[2]")));
-		per.selectByValue("1");
-		
+		Select per = new Select(vc.findElement(By.xpath("(//select[@id='permissions'])[2]")));
+		per.selectByVisibleText(PN);
+
 		vc.findElement(By.xpath("//div[@id='updateModal']//button[@type='button'][normalize-space()='Save']")).click();
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//td[normalize-space()='" + RN + "']/following-sibling::td//button[@id='trashIcon']"))
@@ -595,7 +599,6 @@ public class umssteps {
 
 	}
 
-	
 	@Then("navigate to the task category")
 	public void navigate_to_the_task_category() throws InterruptedException {
 		Thread.sleep(4000);
@@ -607,7 +610,6 @@ public class umssteps {
 		Thread.sleep(4000);
 	}
 
-	
 	@Then("add the category {string}")
 	public void add_the_category(String CN) throws InterruptedException {
 		vc.navigate().refresh();
@@ -622,7 +624,6 @@ public class umssteps {
 
 	}
 
-	
 	@Then("update the category {string}")
 	public void update_the_category(String CN) throws InterruptedException {
 		vc.navigate().refresh();
@@ -654,7 +655,6 @@ public class umssteps {
 		vc.switchTo().alert().dismiss();
 	}
 
-	
 	@Then("navigate to the departments")
 	public void navigate_to_the_departments() throws InterruptedException {
 		Thread.sleep(4000);
@@ -664,7 +664,6 @@ public class umssteps {
 
 	}
 
-	
 	@Then("add the department {string} {string} {string} {string}")
 	public void add_the_department(String DN, String FN, String DC, String DL) throws InterruptedException {
 		Thread.sleep(4000);
@@ -687,7 +686,6 @@ public class umssteps {
 
 	}
 
-	
 	@Then("update the department {string} {string} {string} {string}")
 	public void update_the_department(String DN, String FN, String DC, String DL) throws InterruptedException {
 		Thread.sleep(4000);
@@ -896,25 +894,32 @@ public class umssteps {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//div[@id='updateEmployeeModal']//button[normalize-space()='Save']")).click();
 		Thread.sleep(10000);
-		
+
 		try {
-			vc.findElement(By.xpath("//td[normalize-space()='" + Email + "']/following-sibling::td//button[@id='trashIcon']"))
-			.click();	
+			vc.findElement(
+					By.xpath("//td[normalize-space()='" + Email + "']/following-sibling::td//button[@id='trashIcon']"))
+					.click();
 		} catch (Exception e) {
 			vc.findElement(By.xpath("//a[normalize-space()='2']"));
 			Thread.sleep(4000);
-			vc.findElement(By.xpath("//td[normalize-space()='" + Email + "']/following-sibling::td//button[@id='trashIcon']"))
-			.click();}
-	Thread.sleep(4000);
-	vc.switchTo().alert().dismiss();
-	Thread.sleep(4000);
+			vc.findElement(
+					By.xpath("//td[normalize-space()='" + Email + "']/following-sibling::td//button[@id='trashIcon']"))
+					.click();
+		}
+		Thread.sleep(4000);
+		vc.switchTo().alert().dismiss();
+		Thread.sleep(4000);
 		try {
-		vc.findElement(By.xpath("//td[normalize-space()='" + Email + "']/preceding-sibling::td//input[@type='checkbox']"))
-				.click();}catch (Exception e) {
-					vc.findElement(By.xpath("//a[normalize-space()='2']"));
-					Thread.sleep(4000);
-					vc.findElement(By.xpath("//td[normalize-space()='" + Email + "']/preceding-sibling::td//input[@type='checkbox']")).click();
-				}
+			vc.findElement(
+					By.xpath("//td[normalize-space()='" + Email + "']/preceding-sibling::td//input[@type='checkbox']"))
+					.click();
+		} catch (Exception e) {
+			vc.findElement(By.xpath("//a[normalize-space()='2']"));
+			Thread.sleep(4000);
+			vc.findElement(
+					By.xpath("//td[normalize-space()='" + Email + "']/preceding-sibling::td//input[@type='checkbox']"))
+					.click();
+		}
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//button[normalize-space()='Delete']")).click();
 		Thread.sleep(4000);
@@ -957,18 +962,23 @@ public class umssteps {
 				By.xpath("//td[normalize-space()='" + Email + "']/following-sibling::td//button[@class='edit-icon']"))
 				.click();
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//div[normalize-space()='TEAM_MEMBER']/following-sibling::div//button[@class='btn-success']")).click();
+		vc.findElement(
+				By.xpath("//div[normalize-space()='TEAM_MEMBER']/following-sibling::div//button[@class='btn-success']"))
+				.click();
 		Thread.sleep(4000);
 		vc.switchTo().alert().accept();
 		Thread.sleep(10000);
-		vc.findElement(By.xpath("//h5[normalize-space()='User Details and Roles']/following::button[normalize-space()='×']")).click();
+		vc.findElement(
+				By.xpath("//h5[normalize-space()='User Details and Roles']/following::button[normalize-space()='×']"))
+				.click();
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//td[normalize-space()='" + Email + "']/following-sibling::td//button[@id='trashIcon']"))
+		vc.findElement(
+				By.xpath("//td[normalize-space()='" + Email + "']/following-sibling::td//button[@id='trashIcon']"))
 				.click();
 		Thread.sleep(4000);
 		vc.switchTo().alert().dismiss();
 		Thread.sleep(4000);
-		
+
 	}
 
 	@Then("navigate to the company details")
@@ -984,87 +994,90 @@ public class umssteps {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//button[@class='fa fa-pencil']")).click();
 		Thread.sleep(4000);
-		WebElement CN=vc.findElement(By.xpath("//input[@placeholder='Enter Company Name']"));
+		WebElement CN = vc.findElement(By.xpath("//input[@placeholder='Enter Company Name']"));
 		CN.clear();
 		CN.sendKeys("IKCON Digital IT Services");
 		Thread.sleep(4000);
-		WebElement CURL=vc.findElement(By.xpath("//input[@placeholder='Enter Company Website Url']"));
+		WebElement CURL = vc.findElement(By.xpath("//input[@placeholder='Enter Company Website Url']"));
 		CURL.clear();
 		CURL.sendKeys("www.ikcontech.com/");
 		Thread.sleep(4000);
-		WebElement CNT=vc.findElement(By.xpath("//input[@placeholder='Enter Company Type']"));
+		WebElement CNT = vc.findElement(By.xpath("//input[@placeholder='Enter Company Type']"));
 		CNT.clear();
 		CNT.sendKeys("IT Services");
 		Thread.sleep(4000);
-		WebElement CCP=vc.findElement(By.xpath("//input[@placeholder='Enter Company Contact Person']"));
+		WebElement CCP = vc.findElement(By.xpath("//input[@placeholder='Enter Company Contact Person']"));
 		CCP.clear();
 		CCP.sendKeys("Manohar Bayya");
 		Thread.sleep(4000);
-		WebElement CCPN=vc.findElement(By.xpath("//input[@placeholder='Enter Contact Person Number']"));
+		WebElement CCPN = vc.findElement(By.xpath("//input[@placeholder='Enter Contact Person Number']"));
 		CCPN.clear();
 		CCPN.sendKeys("7032116373");
 		Thread.sleep(4000);
-		WebElement CPE=vc.findElement(By.xpath("//input[@placeholder='Enter Contact Person Email']"));
+		WebElement CPE = vc.findElement(By.xpath("//input[@placeholder='Enter Contact Person Email']"));
 		CPE.clear();
 		CPE.sendKeys("manohar.b@ikcontech.com");
 		Thread.sleep(4000);
-		WebElement ADDR=vc.findElement(By.xpath("//textarea[contains(@class,'form-control')]"));
+		WebElement ADDR = vc.findElement(By.xpath("//textarea[contains(@class,'form-control')]"));
 		ADDR.clear();
 		ADDR.sendKeys("Second Floor,ISR Towers,Madhapur,Hyderabad - 500081");
 		Thread.sleep(4000);
-		WebElement SAE=vc.findElement(By.xpath("//input[@placeholder='Enter Super Admin Email ID']"));
+		WebElement SAE = vc.findElement(By.xpath("//input[@placeholder='Enter Super Admin Email ID']"));
 		SAE.clear();
 		SAE.sendKeys("tdivakar@ikcontech.com");
 		Thread.sleep(4000);
-		Select Country=new Select(vc.findElement(By.xpath("//select[@id='country-dropdown']")));
-		 Country.selectByVisibleText("India");
-		 Thread.sleep(4000);
-		 Select Timezone=new Select(vc.findElement(By.xpath("//select[@placeholder='choose time zone']")));
+		Select Country = new Select(vc.findElement(By.xpath("//select[@id='country-dropdown']")));
+		Country.selectByVisibleText("India");
+		Thread.sleep(4000);
+		Select Timezone = new Select(vc.findElement(By.xpath("//select[@placeholder='choose time zone']")));
 		Timezone.selectByValue("Indian Standard Time");
 		Thread.sleep(4000);
-		WebElement CDE=vc.findElement(By.xpath("//input[@placeholder='Enter Company Email ID']"));
+		WebElement CDE = vc.findElement(By.xpath("//input[@placeholder='Enter Company Email ID']"));
 		CDE.clear();
 		CDE.sendKeys("sales@ikcontech.com");
 		Thread.sleep(4000);
-		WebElement CDP=vc.findElement(By.xpath("//input[@placeholder='Enter Company Contact Number']"));
+		WebElement CDP = vc.findElement(By.xpath("//input[@placeholder='Enter Company Contact Number']"));
 		CDP.clear();
 		CDP.sendKeys("7324055077");
 		Thread.sleep(4000);
-		try{vc.findElement(By.xpath("//button[normalize-space()='Save']")).click();}
-		catch (Exception e) {
+		try {
+			vc.findElement(By.xpath("//button[normalize-space()='Save']")).click();
+		} catch (Exception e) {
 			vc.findElement(By.xpath("(//button[normalize-space()='Save'])[1]")).click();
 		}
-		
-		
+
 	}
 
 	@Then("update the company details")
 	public void update_the_company_details() {
 
 	}
-	
-	
-	public void Permissions() throws InterruptedException {
+
+	@Then("Navigate to the Permissions")
+	public void Navigate_to_the_Permissions() throws InterruptedException {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//div[normalize-space()='Settings']")).click();
 		Thread.sleep(4000);//
 		vc.findElement(By.xpath("//a[normalize-space()='Permissions']")).click();
 	}
-	
+
 	public void Menu_items() throws InterruptedException {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//div[normalize-space()='Settings']")).click();
 		Thread.sleep(4000);//
 		vc.findElement(By.xpath("//a[normalize-space()='Menu Items']")).click();
 	}
-	public void Assign_MenuItems_Permisisons() throws InterruptedException {
+
+	@And("Navigate to the Assign MenuItems Permisisons")
+	public void Navigate_to_the_Assign_MenuItems_Permisisons() throws InterruptedException {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//div[normalize-space()='Settings']")).click();
 		Thread.sleep(4000);//
 		vc.findElement(By.xpath("//a[normalize-space()='Assign MenuItems & Permisisons']")).click();
 	}
-	
-	public void Add_Assign_MenuItems_Permisisons() throws InterruptedException {
+
+	@Then("add the Assign MenuItems Permisisons {string} {string}")
+	public void add_the_Assign_MenuItems_Permisisons() throws InterruptedException {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//p[normalize-space()='Add']")).click();
 		Thread.sleep(4000);//
@@ -1074,69 +1087,97 @@ public class umssteps {
 		Thread.sleep(4000);//
 		vc.findElement(By.xpath("//span[contains(.,'Help Center')]")).click();
 		Thread.sleep(4000);//
-		for(int i= 1; i <5 ; i++) {
-		vc.findElement(By.xpath("//input[@name='permission"+i+"']")).click();
+		for (int i = 1; i < 5; i++) {
+			vc.findElement(By.xpath("//input[@name='permission" + i + "']")).click();
 		}
-		
+
 	}
-	
-	public void update_Assign_MenuItems_Permisisons(String s,String v) throws InterruptedException {
-		Thread.sleep(4000);
-		vc.findElement(By.xpath("//input[@aria-autocomplete='list']")).click();
-		Thread.sleep(4000);//
-		vc.findElement(By.xpath("//a[normalize-space()='Assign MenuItems & Permisisons']")).click();
-		Thread.sleep(4000);//
+
+	@Then("Update the Assign MenuItems Permisisons {string} {string}")
+	public void Update_the_Assign_MenuItems_Permisisons(String s, String v) throws InterruptedException {
+		// wait= new WebDriverWait(vc, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.visibilityOf(vc.findElement(By.xpath("//input[@aria-autocomplete='list']"))))
+				.click();
+		vc.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
 		try {
-		vc.findElement(By.xpath("//span[contains(.,'Venkatesh')][2]")).click();}catch (Exception e) {	
-			vc.findElement(By.xpath("(//span[contains(.,'Venkatesh')])[2]")).click();
+			vc.findElement(By.xpath("//span[contains(.,'Testing')]")).click();
+		} catch (Exception e) {
+			vc.findElement(By.xpath("(//span[contains(.,'Testing')])[2]")).click();
 		}
+
+		vc.findElements(By.xpath("//tr[@class='ng-star-inserted']"));
+		vc.navigate().refresh();
 		List<String> list = new ArrayList<String>(Arrays.asList(s.split(",")));
 		List<String> jist = new ArrayList<String>(Arrays.asList(v.split(",")));
-		
-		for(int i= 0,j=0; i < list.size() & j<jist.size(); i++,j++) {
-		vc.findElement(By.xpath("(//td[normalize-space()='"+s+"']/following-sibling::td//input[@type='checkbox'])["+v+"]")).click();
-		Thread.sleep(3000);
-		vc.switchTo().alert().accept();
-		Thread.sleep(4000);
+
+		for (int i = 0, j = 0; i < list.size() & j < jist.size(); i++, j++) {
+			vc.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			WebElement per1 = vc.findElement(By.xpath("(//td[normalize-space()='" + list.get(i)
+					+ "']/following-sibling::td//input[@type='checkbox'])[" + jist.get(j) + "]"));
+
+			vc.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			wait.until(ExpectedConditions.visibilityOf(per1)).sendKeys(Keys.DOWN);
+			// wait.until(ExpectedConditions.visibilityOf(per)).sendKeys(Keys.);
+			Thread.sleep(1000);
+			vc.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
+			wait.until(ExpectedConditions.visibilityOf(per1)).click();
+			vc.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			vc.switchTo().alert().accept();
+			vc.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
+
 		}
-		
+
 	}
-	
-	public void Role_Menu_items() throws InterruptedException {
-		Thread.sleep(4000);
-		vc.findElement(By.xpath("//div[normalize-space()='Settings']")).click();
+
+	@Then("Navigate to the Role Menu Items")
+	public void Navigate_to_the_Role_Menu_Items() throws InterruptedException {
+		// wait= new WebDriverWait(vc, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.visibilityOf(vc.findElement(By.xpath("//div[normalize-space()='Settings']"))))
+				.click();
 		Thread.sleep(4000);//
-		vc.findElement(By.xpath("//a[normalize-space()='Role Menu Items']")).click();
+		wait.until(
+				ExpectedConditions.visibilityOf(vc.findElement(By.xpath("//a[normalize-space()='Role Menu Items']"))))
+				.click();
 	}
-	public void add_permissions() throws InterruptedException {
+
+	@Then("Add the Permissions {string}")
+	public void Add_the_Permissions(String s1) throws InterruptedException {
 		Thread.sleep(4000);
 		vc.navigate().refresh();
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//p[normalize-space()='Add']")).click();
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//input[@id='categoryName']")).sendKeys("permission");
+		vc.findElement(By.xpath("//input[@id='categoryName']")).sendKeys(s1);
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//textarea[@id='categoryDesc']")).sendKeys("permission des");
+		vc.findElement(By.xpath("//textarea[@id='categoryDesc']")).sendKeys("Access permissions to " + s1);
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//button[normalize-space()='Save']")).click();
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//form[@id='formId']//button[normalize-space()='Save']")).click();
+		// vc.findElement(By.xpath("//form[@id='formId']//button[normalize-space()='Save']")).click();
 	}
-	public void add_role_menu_items(String Role,String s) throws InterruptedException {
-		Thread.sleep(4000);
-		vc.navigate().refresh();		
-		Thread.sleep(4000);
-		vc.findElement(By.xpath("//td[normalize-space()='"+Role+"']/following-sibling::td//button[@id='addMenuItem']")).click();
-		Thread.sleep(4000);
+
+	@Then("add the Role Menu Items {string} {string}")
+	public void add_the_Role_Menu_Items(String Role, String s) throws InterruptedException {
+		vc.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		vc.navigate().refresh();
+		vc.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		wait.until(ExpectedConditions.visibilityOf(vc.findElement(
+				By.xpath("//td[normalize-space()='" + Role + "']/following-sibling::td//button[@id='addMenuItem']"))))
+				.click();
+		vc.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		List<String> list = new ArrayList<String>(Arrays.asList(s.split(",")));
-		for(int i= 0; i < list.size(); i++) {
-			Thread.sleep(4000);
-		vc.findElement(By.xpath("(//div[@class='ng-star-inserted'][contains(.,'"+list.get(i)+"')]//input[@id='menuItems'])[1]")).click();
-		Thread.sleep(4000);
+		for (int i = 0; i < list.size(); i++) {
+			vc.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			wait.until(ExpectedConditions.visibilityOf(vc.findElement(
+					By.xpath("(//div[normalize-space()='" + list.get(i) + "']//input[@id='menuItems'])[1]")))).click();
+
 		}
-		Thread.sleep(4000);
-		vc.findElement(By.xpath("//button[normalize-space()='Save']")).click();
+		vc.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		wait.until(ExpectedConditions.visibilityOf(vc.findElement(By.xpath("//button[normalize-space()='Save']"))))
+				.click();
 	}
+
 	public void add_menu_items() throws InterruptedException {
 		Thread.sleep(4000);
 		vc.navigate().refresh();
@@ -1153,27 +1194,186 @@ public class umssteps {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//form[@id='formId']//button[normalize-space()='Save']")).click();
 	}
-	public void update_permissions() throws InterruptedException {
+
+	@Then("Update the Permissions {string}")
+	public void Update_the_Permissions(String s1) throws InterruptedException {
 		Thread.sleep(4000);
 		vc.navigate().refresh();
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//td[normalize-space()='View,Create,Update,Delete']/following-sibling::td//button[@id='editIcon']")).click();
+		vc.findElement(By.xpath("//td[normalize-space()='" + s1 + "']/following-sibling::td//button[@id='editIcon']"))
+				.click();
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//input[@id='categoryName']")).sendKeys("permission");
+		WebElement pn = vc.findElement(By.xpath("//input[@id='categoryName']"));
+		pn.clear();
+		pn.sendKeys(s1);
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//textarea[@id='categoryDesc']")).sendKeys("permission des");
+		WebElement pnd = vc.findElement(By.xpath("//textarea[@id='categoryDesc']"));
+		pnd.clear();
+		pnd.sendKeys("Access permissions to " + s1);
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//button[normalize-space()='Save']")).click();
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//form[@id='formId']//button[normalize-space()='Save']")).click();
+
 	}
+
 	public void delete_permissions() throws InterruptedException {
 		Thread.sleep(4000);
 		vc.navigate().refresh();
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//td[normalize-space()='View,Create,Update,Delete']/following-sibling::td//button[@id='trashIcon']")).click();
+		vc.findElement(By.xpath(
+				"//td[normalize-space()='View,Create,Update,Delete']/following-sibling::td//button[@id='trashIcon']"))
+				.click();
 		Thread.sleep(4000);
 		vc.switchTo().alert().dismiss();
+	}
+
+	public void reports() {
+
+		vc.findElement(By.xpath("//a[normalize-space()='BatchProcessing Report']")).click();
+
+		vc.findElement(By.xpath("//input[@type='text']")).click();
+		vc.findElement(By.xpath("//span[normalize-space()='Venkatesh U']")).click();
+		vc.findElement(By.xpath("(//span[normalize-space()='Venkatesh U'])[2]")).click();
+
+		vc.findElement(By.xpath("(//b[@id='reportheading']/following::span)[1]")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Aged']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Aged']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Aged']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Aged']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Aged']")).click();
+	}
+
+	@Then("Navigate to reports")
+	public void navigate_to_reports() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+
+	}
+
+	@Then("Navigate to Meetings Organized")
+	public void navigate_to_meetings_organized() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[@routerlink='/meeting-reports'][normalize-space()='Organized']")).click();
+
+	}
+
+	@Then("Navigate to Meetings Attended")
+	public void navigate_to_meetings_attended() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Attended']")).click();
+
+	}
+
+	@Then("Navigate to Meetings All Departments")
+	public void navigate_to_meetings_all_departments() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[@routerlink='/meeting-reports'][normalize-space()='All Departments']")).click();
+
+	}
+
+	@Then("Navigate to Action Items Organized")
+	public void navigate_to_action_items_organized() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[@routerlink='/actionitem-reports'][normalize-space()='Organized']")).click();
+	}
+
+	@Then("Navigate to Action Items Priority")
+	public void navigate_to_action_items_priority() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Priority']")).click();
+
+	}
+
+	@Then("Navigate to Action Items All Department")
+	public void navigate_to_action_items_all_department() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[@routerlink='/actionitem-reports'][normalize-space()='All Departments']")).click();
+
+	}
+
+	@Then("Task Items Organized")
+	public void task_items_organized() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[@routerlink='/task-reports'][normalize-space()='Organized']")).click();
+
+	}
+
+	@Then("Task Items Severity")
+	public void task_items_severity() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Severity']")).click();
+
+	}
+
+	@Then("Task Items Status")
+	public void task_items_status() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Status(priority)']")).click();
+
+	}
+
+	@Then("Task Items Aged")
+	public void task_items_aged() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Aged']")).click();
+
+		
+
+	}
+
+	@Then("Task Items All Departments")
+	public void task_items_all_departments() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[@routerlink='/task-reports'][normalize-space()='All Departments']")).click();
+
+		
+
+	}
+
+	@Then("Task category Organizational")
+	public void task_category_organizational() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Organizational']")).click();
+		
+
+	}
+
+	@Then("Task category External")
+	public void task_category_external() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='External']")).click();
+		
+
+	}
+
+	@Then("Task category Risk")
+	public void task_category_risk() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Risk']")).click();
+		
+
+	}
+
+	@Then("Task category Project Management")
+	public void task_category_project_management() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Project Management']")).click();
+		
+
+	}
+
+	@Then("Task category Technical")
+	public void task_category_technical() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Technical']")).click();
+		
+
+	}
+
+	@Then("Task category Task Category summary")
+	public void task_category_task_category_summary() {
+		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Task Category Summary']")).click();
+
 	}
 
 }
