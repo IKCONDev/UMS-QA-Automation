@@ -41,7 +41,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 //import org.openqa.selenium.support.ui.WebDriverWait;
 //import objec.UMSOBJ;
 @SuppressWarnings({ "deprecation" })
-public class umssteps {
+public class umssteps { 
 	WebDriver vc;
 	final int zr = 20;
 	Wait<WebDriver> wait;
