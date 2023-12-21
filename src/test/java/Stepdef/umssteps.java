@@ -20,7 +20,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.markuputils.ExtentColor;
@@ -75,7 +74,7 @@ public class umssteps {
 	public void Cleanup() throws IOException {
 
 		exp.flush();
-		vc.close();
+		vc.quit();
 
 	}
 
@@ -282,6 +281,7 @@ public class umssteps {
 		Thread.sleep(4000);
 		WebElement button =vc.findElement(By.xpath("//td[normalize-space()='" + At + "']/following::td//button[.='Submit']"));
 		button.sendKeys(Keys.DOWN);
+		button.sendKeys(Keys.DOWN);
 		wait.until(ExpectedConditions.visibilityOf(button)).click();// submitting
 		Thread.sleep(4000);
 	}
@@ -300,9 +300,9 @@ public class umssteps {
 				By.xpath("//td[normalize-space()='" + At + "']/following::td//button[normalize-space()='Add Task']"))
 				.click();// add task
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//textarea[@placeholder='Enter title !...']")).sendKeys(Tt);
+		vc.findElement(By.xpath("//textarea[@placeholder='Enter title']")).sendKeys(Tt);
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//textarea[@placeholder='Enter description !...']")).sendKeys(TD);
+		vc.findElement(By.xpath("//textarea[@placeholder='Enter description']")).sendKeys(TD);
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//ng-select[@id='taskOwner']//input[@type='text']")).click();// assginee
 		Thread.sleep(4000);
@@ -310,9 +310,10 @@ public class umssteps {
 		// Thread.sleep(4000);
 		// vc.findElement(By.xpath("//select[@id='taskCategory']")).click();
 		Thread.sleep(4000);
-		Select Cat = new Select(vc.findElement(By.xpath("//select[@id='taskCategory']")));
-		Thread.sleep(5000);
-		Cat.selectByVisibleText(CN);
+		vc.findElement(By.xpath("//ng-select[@id='taskCategory']//input[@type='text']")).click();
+		Thread.sleep(3000);
+		vc.findElement(By.xpath("//span[normalize-space()='"+CN+"']")).click();
+		Thread.sleep(3000);
 		test1.pass(MarkupHelper.createLabel("task details", ExtentColor.GREEN)).info("task details").addScreenCaptureFromBase64String(Capsre());
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//button[@class='btn btn-primary saveButton']")).click();
@@ -347,12 +348,11 @@ public class umssteps {
 		vc.findElement(By.xpath("//td[normalize-space()='" + Tt1 + "']/following-sibling::td//button[@id='editIcon']"))
 				.click();
 		Thread.sleep(4000);
-		WebElement TT = vc.findElement(By.xpath("//textarea[@placeholder='Enter Title']"));
+		WebElement TT = vc.findElement(By.xpath("//textarea[@placeholder='Enter title']"));//textarea[@placeholder='Enter title']
 		TT.clear();
 		TT.sendKeys(UTT);
 		Thread.sleep(4000);
-		WebElement TD = vc.findElement(By
-				.xpath("//textarea[@class='form-control ng-untouched ng-pristine ng-valid'][@name='taskDescription']"));
+		WebElement TD = vc.findElement(By.xpath("//textarea[@placeholder='Enter description']"));
 		TD.clear();
 		TD.sendKeys(UTD);
 		Thread.sleep(4000);
@@ -840,9 +840,9 @@ public class umssteps {
 
 	}
 
-	@And("add the employee profile {string} {string} {string} {string} {string} {string} {string} {string}")
+	@And("add the employee profile {string} {string} {string} {string} {string} {string} {string} {string} {string}")
 	public void add_the_employee_profile(String FN, String LN, String EID, String Email, String DN, String DSN,
-			String TID, String FNs) throws InterruptedException {
+			String TID, String FNs,String GN) throws InterruptedException {
 		Thread.sleep(4000);
 		vc.navigate().refresh();
 		Thread.sleep(4000);
@@ -854,7 +854,7 @@ public class umssteps {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//div[@id='addEmployeeModal']//input[@id='employeeId']")).sendKeys(EID);
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//div[@id='addEmployeeModal']//input[@id='genderMale']")).click();
+		vc.findElement(By.xpath("//div[@id='addEmployeeModal']//input[@id='gender"+GN+"']")).click();
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//div[@id='addEmployeeModal']//input[@id='employeeEmail']")).sendKeys(Email);
 		Thread.sleep(4000);
@@ -884,9 +884,9 @@ public class umssteps {
 
 	}
 
-	@Then("update the employee profile {string} {string} {string} {string} {string} {string} {string} {string}")
+	@Then("update the employee profile {string} {string} {string} {string} {string} {string} {string} {string} {string}")
 	public void update_the_employee_profile(String FN, String LN, String EID, String Email, String DN, String DSN,
-			String TID, String FNs) throws InterruptedException {
+			String TID, String FNs,String GN) throws InterruptedException {
 		Thread.sleep(4000);
 		try {
 			vc.findElement(
@@ -912,9 +912,7 @@ public class umssteps {
 		id.clear();
 		id.sendKeys(EID);
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//input[@id='genderMaleUpdate']")).click();
-		Thread.sleep(4000);
-		vc.findElement(By.xpath("//input[@id='genderFemaleUpdate']")).click();
+		vc.findElement(By.xpath("//input[@id='gender"+GN+"Update']")).click();
 		Thread.sleep(4000);
 		WebElement Em = vc.findElement(By.xpath("//input[@id='updateEmail']"));
 		Em.clear();
@@ -1000,11 +998,11 @@ public class umssteps {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//button[normalize-space()='Add']")).click();
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//input[@aria-autocomplete='list']")).click();
+		Select meil = new Select(vc.findElement(By.xpath("//select[@id='userEmail']")));
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//span[normalize-space()='" + Email + "']")).click();
+		meil.selectByVisibleText(Email);
 		Thread.sleep(4000);
-		Select role = new Select(vc.findElement(By.xpath("//select[@id='userRole']")));
+		Select role = new Select(vc.findElement(By.xpath("//select[@id='userRole']"))); //select[@id='userRole']
 		Thread.sleep(4000);
 		role.selectByVisibleText(RN);
 		Thread.sleep(4000);
@@ -1407,7 +1405,7 @@ public class umssteps {
 	@Then("Task Items Status")
 	public void task_items_status() throws InterruptedException {
 		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
-		vc.findElement(By.xpath("//a[normalize-space()='Status(priority)']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Status(Priority)']")).click();
 		Thread.sleep(1000);
 		test1.pass(MarkupHelper.createLabel("Task Items Status", ExtentColor.GREEN)).info("Task Items Status").addScreenCaptureFromBase64String(Capsre());
 
