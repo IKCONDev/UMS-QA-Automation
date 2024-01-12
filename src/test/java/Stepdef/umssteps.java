@@ -41,7 +41,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 //import org.openqa.selenium.support.ui.WebDriverWait;
 //import objec.UMSOBJ;
 @SuppressWarnings({ "deprecation" })
-public class umssteps { 
+public class umssteps {  
 	WebDriver vc;
 	final int zr = 20;
 	Wait<WebDriver> wait;
@@ -339,7 +339,7 @@ public class umssteps {
 		} catch (Exception e) {
 		}
 		vc.findElement(By.xpath("//p[@id='OrganizedTask']")).click();
-		exp.createTest("Organized Task").info("Task List").addScreenCaptureFromBase64String(Capsre());
+		test1.pass(MarkupHelper.createLabel("Organized Task", ExtentColor.GREEN)).info("Organized Task").addScreenCaptureFromBase64String(Capsre());		
 		Thread.sleep(4000);
 		try {
 			vc.switchTo().alert().accept();
@@ -581,6 +581,17 @@ public class umssteps {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//div[normalize-space()='Settings']")).click();
 		test1.pass(MarkupHelper.createLabel("Settings page", ExtentColor.GREEN)).info(" Setting details").addScreenCaptureFromBase64String(Capsre());
+		
+	
+	}
+	@Then("User navigate to the Add Menu Items")
+	public void user_navigate_to_the_Add_Menu_Items() throws InterruptedException {
+		Thread.sleep(4000);
+		vc.findElement(By.xpath("//div[normalize-space()='Settings']")).click();
+		test1.pass(MarkupHelper.createLabel("Settings page", ExtentColor.GREEN)).info(" Setting details").addScreenCaptureFromBase64String(Capsre());
+		vc.findElement(By.xpath("//a[normalize-space()='Menu Items']")).click();
+		test1.pass(MarkupHelper.createLabel("Add Menu Items page", ExtentColor.GREEN)).info("Add Menu Details").addScreenCaptureFromBase64String(Capsre());
+	
 	}
 
 	@Then("Navigate to the roles")
@@ -1059,7 +1070,7 @@ public class umssteps {
 		Thread.sleep(4000);
 		WebElement CURL = vc.findElement(By.xpath("//input[@placeholder='Enter Company Website Url']"));
 		CURL.clear();
-		CURL.sendKeys("www.ikcontech.com/");
+		CURL.sendKeys("www.ikcontech.com");
 		Thread.sleep(4000);
 		WebElement CNT = vc.findElement(By.xpath("//input[@placeholder='Enter Company Type']"));
 		CNT.clear();
@@ -1251,23 +1262,26 @@ public class umssteps {
 				.click();
 		Thread.sleep(2000);
 	}
-
-	public void add_menu_items() throws InterruptedException {
+	@And("Add menu items")
+	public void Add_menu_items() throws InterruptedException {
 		Thread.sleep(4000);
 		vc.navigate().refresh();
 		Thread.sleep(4000);
+		String s="Meetings,Tasks,Employees,Users,Departments,Designations,Task Categories,Organization,Batch Details,Action Items,Reports,Meeting Reports,Help Center,Action Item Reports,Task Category Report,Task Reports,Assign Menu Items & Permissions";
+		List<String> list = new ArrayList<String>(Arrays.asList(s.split(",")));
+		for (int i = 0; i < list.size(); i++) {
 		vc.findElement(By.xpath("//p[normalize-space()='Add']")).click();
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//input[@placeholder='Menu Item Name']")).sendKeys("menu item Name");
+		vc.findElement(By.xpath("//input[@placeholder='Menu Item Name']")).sendKeys(list.get(i));
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//input[@placeholder='Menu Item Path']")).sendKeys("menu item path");
+		vc.findElement(By.xpath("//input[@placeholder='Menu Item Path']")).sendKeys(list.get(i));
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//input[@placeholder='Menu Item Path']")).sendKeys("menu item path");
-		Thread.sleep(4000);
-		vc.findElement(By.xpath("//textarea[@placeholder='Menu Item Description']")).sendKeys("menu item description");
+		vc.findElement(By.xpath("//textarea[@placeholder='Menu Item Description']")).sendKeys(list.get(i));
 		Thread.sleep(4000);
 		test1.pass(MarkupHelper.createLabel("Add Menu Items", ExtentColor.GREEN)).info("Add Menu Items").addScreenCaptureFromBase64String(Capsre());
-		vc.findElement(By.xpath("//form[@id='formId']//button[normalize-space()='Save']")).click();
+		vc.findElement(By.xpath("//button[normalize-space()='Save']")).click();
+		Thread.sleep(4000);
+		}
 	}
 
 	@Then("Update the Permissions {string}")
@@ -1334,7 +1348,7 @@ public class umssteps {
 		}catch (Exception e) {vc.findElement(By.xpath("(//span[contains(normalize-space(),'"+sn+"')])[2]")).click();	}	
 		for(int i=1;i<5;i++) {
 			Thread.sleep(2000);
-		vc.findElement(By.xpath("(//b[@id='reportheading']/following::span)["+i+"]")).click();
+		vc.findElement(By.xpath("(//h4[@id='reportheading']/following::span)["+i+"]")).click();
 		Thread.sleep(2000);
 		test1.pass(MarkupHelper.createLabel("view the reports", ExtentColor.GREEN)).info("view the reports").addScreenCaptureFromBase64String(Capsre());
 		}
@@ -1358,7 +1372,7 @@ public class umssteps {
 
 	}
 
-	@Then("Navigate to Action Items Organized")
+	@Then("Navigate to Action Items Organized") 
 	public void navigate_to_action_items_organized() throws InterruptedException {
 		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
 		vc.findElement(By.xpath("//a[@routerlink='/actionitem-reports'][normalize-space()='Organized']")).click();
@@ -1405,7 +1419,7 @@ public class umssteps {
 	@Then("Task Items Status")
 	public void task_items_status() throws InterruptedException {
 		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
-		vc.findElement(By.xpath("//a[normalize-space()='Status(Priority)']")).click();
+		vc.findElement(By.xpath("//a[normalize-space()='Status']")).click();
 		Thread.sleep(1000);
 		test1.pass(MarkupHelper.createLabel("Task Items Status", ExtentColor.GREEN)).info("Task Items Status").addScreenCaptureFromBase64String(Capsre());
 
@@ -1415,10 +1429,9 @@ public class umssteps {
 	public void task_items_aged() throws InterruptedException {
 		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
 		vc.findElement(By.xpath("//a[normalize-space()='Aged']")).click();
-		vc.findElement(By.xpath("(//b[@id='reportheading']/following::span)[1]")).click();
 		for(int i=1;i<5;i++) {
 			Thread.sleep(2000);
-		vc.findElement(By.xpath("(//b[@id='reportheading']/following::span)["+i+"]")).click();
+		vc.findElement(By.xpath("(//h4[@id='reportheading']/following::span)["+i+"]")).click();
 		Thread.sleep(2000);
 		test1.pass(MarkupHelper.createLabel("Task Items Aged", ExtentColor.GREEN)).info("Task Items Aged").addScreenCaptureFromBase64String(Capsre());
 		}
@@ -1444,7 +1457,7 @@ public class umssteps {
 		vc.findElement(By.xpath("//a[normalize-space()='Organizational']")).click();
 		for(int i=1;i<5;i++) {
 			Thread.sleep(2000);
-			vc.findElement(By.xpath("(//b[normalize-space()='Task Category']/following::span)["+i+"]")).click();
+			vc.findElement(By.xpath("(//h4[normalize-space()='Task Category']/following::span)["+i+"]")).click();
 			Thread.sleep(2000);
 			test1.pass(MarkupHelper.createLabel("Task category Organizational", ExtentColor.GREEN)).info("Task category Organizational").addScreenCaptureFromBase64String(Capsre());
 			}
@@ -1457,7 +1470,7 @@ public class umssteps {
 		vc.findElement(By.xpath("//a[normalize-space()='External']")).click();
 		for(int i=1;i<5;i++) {
 			Thread.sleep(2000);
-			vc.findElement(By.xpath("(//b[normalize-space()='Task Category']/following::span)["+i+"]")).click();
+			vc.findElement(By.xpath("(//h4[normalize-space()='Task Category']/following::span)["+i+"]")).click();
 			}
 
 	}
@@ -1468,7 +1481,7 @@ public class umssteps {
 		vc.findElement(By.xpath("//a[normalize-space()='Risk']")).click();
 		for(int i=1;i<5;i++) {
 			Thread.sleep(2000);
-			vc.findElement(By.xpath("(//b[normalize-space()='Task Category']/following::span)["+i+"]")).click();
+			vc.findElement(By.xpath("(//h4[normalize-space()='Task Category']/following::span)["+i+"]")).click();
 			Thread.sleep(2000);
 			test1.pass(MarkupHelper.createLabel("Task category Risk", ExtentColor.GREEN)).info("Task category Risk").addScreenCaptureFromBase64String(Capsre());
 			}
@@ -1481,7 +1494,7 @@ public class umssteps {
 		vc.findElement(By.xpath("//a[normalize-space()='Project Management']")).click();
 		for(int i=1;i<5;i++) {
 			Thread.sleep(2000);
-			vc.findElement(By.xpath("(//b[normalize-space()='Task Category']/following::span)["+i+"]")).click();
+			vc.findElement(By.xpath("(//h4[normalize-space()='Task Category']/following::span)["+i+"]")).click();
 			Thread.sleep(2000);
 			test1.pass(MarkupHelper.createLabel("Task category Project Management", ExtentColor.GREEN)).info("Task category Project Management").addScreenCaptureFromBase64String(Capsre());
 			}
@@ -1494,7 +1507,7 @@ public class umssteps {
 		vc.findElement(By.xpath("//a[normalize-space()='Technical']")).click();
 		for(int i=1;i<5;i++) {
 			Thread.sleep(2000);
-			vc.findElement(By.xpath("(//b[normalize-space()='Task Category']/following::span)["+i+"]")).click();
+			vc.findElement(By.xpath("(//h4[normalize-space()='Task Category']/following::span)["+i+"]")).click();
 			Thread.sleep(2000);
 			test1.pass(MarkupHelper.createLabel("Task category Technical", ExtentColor.GREEN)).info("Task category Technical").addScreenCaptureFromBase64String(Capsre());
 			}
@@ -1511,7 +1524,7 @@ public class umssteps {
 		}catch (Exception e) {vc.findElement(By.xpath("(//span[normalize-space()='"+sn+"')])[2]")).click();	}	
 		for(int i=1;i<5;i++) {
 			Thread.sleep(2000);
-			vc.findElement(By.xpath("(//b[normalize-space()='Task Category']/following::span)["+i+"]")).click();
+			vc.findElement(By.xpath("(//h4[normalize-space()='Task Category']/following::span)["+i+"]")).click();
 			Thread.sleep(2000);
 			test1.pass(MarkupHelper.createLabel("Task category summary", ExtentColor.GREEN)).info("Task category summary").addScreenCaptureFromBase64String(Capsre());
 			}
