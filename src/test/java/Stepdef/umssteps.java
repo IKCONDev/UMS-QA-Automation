@@ -176,6 +176,11 @@ public class umssteps {
 		vc.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//button[@id='createMeeting']")).click();
+		Thread.sleep(4000);
+		try {
+			System.out.println(
+		vc.switchTo().alert().getText());}catch (Exception e) {
+		}
 
 	}
 
