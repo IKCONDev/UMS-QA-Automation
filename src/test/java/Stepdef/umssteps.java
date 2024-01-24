@@ -118,6 +118,11 @@ public class umssteps {
 	@When("user enter the submit button")
 	public void user_enter_the_submit_button() {
 		vc.findElement(By.xpath("//button[contains(text(),'Login')]")).click();
+		vc.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		try {
+			String Toast=vc.findElement(By.xpath("//div[@role='alert']")).getText();
+			System.out.println(Toast);}catch (Exception e) {
+		}
 
 	}
 
@@ -178,8 +183,8 @@ public class umssteps {
 		vc.findElement(By.xpath("//button[@id='createMeeting']")).click();
 		Thread.sleep(4000);
 		try {
-			System.out.println(
-		vc.switchTo().alert().getText());}catch (Exception e) {
+			String Toast=vc.findElement(By.xpath("//div[contains(@id,'toast-')]")).getText();
+			System.out.println(Toast);}catch (Exception e) {
 		}
 
 	}
@@ -583,6 +588,10 @@ public class umssteps {
 
 	@Then("User navigate to the settings")
 	public void user_navigate_to_the_settings() throws InterruptedException {
+		try {
+			String Toast=vc.findElement(By.xpath("//div[@role='alert']")).getText();
+			System.out.println(Toast);}catch (Exception e) {
+		}
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//div[normalize-space()='Settings']")).click();
 		test1.pass(MarkupHelper.createLabel("Settings page", ExtentColor.GREEN)).info(" Setting details").addScreenCaptureFromBase64String(Capsre());
@@ -1242,6 +1251,10 @@ public class umssteps {
 		test1.pass(MarkupHelper.createLabel("Add the Permissions", ExtentColor.GREEN)).info("Add the Permissions").addScreenCaptureFromBase64String(Capsre());
 		vc.findElement(By.xpath("//button[normalize-space()='Save']")).click();
 		Thread.sleep(4000);
+		try {
+			String Toast=vc.findElement(By.xpath("//div[@role='alert']")).getText();
+			System.out.println(Toast);}catch (Exception e) {
+		}
 		// vc.findElement(By.xpath("//form[@id='formId']//button[normalize-space()='Save']")).click();
 	}
 
