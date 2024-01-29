@@ -9,33 +9,33 @@ Feature: Login the UMS
   When user enter the submit button
   And user clear the authentication
   Then User navigate to the settings
-  #Then User navigate to the Add Menu Items
-  #And Add menu items
-  #And Navigate to the Permissions
-  #Then Add the Permissions "<PN3>"
-  #And Update the Permissions "<PN3>"
-  #Then Add the Permissions "<PN2>"
-  #Then Add the Permissions "<PN1>"
-  #And Navigate to the roles
-  #And add the role "<RN1>" "<PN1>"
-  #And add the role "<RN2>" "<PN1>"
-  #And add the role "<RN3>" "<PN3>"
-  #And add the role "<RN4>" "<PN4>"
-  #And add the role "<RN5>" "<PN2>"
-  #Then Update the role "<RN1>" "<PN2>"
-  #And Navigate to the Role Menu Items
-  #Then add the Role Menu Items "<RN1>" "<ASN1>"
-  #Then add the Role Menu Items "<RN2>" "<ASN1>"
-  #Then add the Role Menu Items "<RN3>" "<ASN1>"
-  #Then add the Role Menu Items "<RN4>" "<ASN1>"
-  #Then add the Role Menu Items "<RN5>" "<ASN1>"
-  #Then navigate to the task category
-  #And add the category "<CN1>"
-  #And add the category "<CN2>"
-  #And add the category "<CN3>"
-  #And add the category "<CN4>"
+  Then User navigate to the Add Menu Items
+  And Add menu items
+  And Navigate to the Permissions
+  Then Add the Permissions "<PN3>"
+  And Update the Permissions "<PN3>"
+  Then Add the Permissions "<PN2>"
+  Then Add the Permissions "<PN1>"
+  And Navigate to the roles
+  And add the role "<RN1>" "<PN1>"
+  And add the role "<RN2>" "<PN1>"
+  And add the role "<RN3>" "<PN3>"
+  And add the role "<RN4>" "<PN4>"
+  And add the role "<RN5>" "<PN2>"
+  Then Update the role "<RN1>" "<PN2>"
+  And Navigate to the Role Menu Items
+  Then add the Role Menu Items "<RN1>" "<ASN1>"
+  Then add the Role Menu Items "<RN2>" "<ASN1>"
+  Then add the Role Menu Items "<RN3>" "<ASN1>"
+  Then add the Role Menu Items "<RN4>" "<ASN1>"
+  Then add the Role Menu Items "<RN5>" "<ASN1>"
+  Then navigate to the task category
+  And add the category "<CN1>"
+  And add the category "<CN2>"
+  And add the category "<CN3>"
+  And add the category "<CN4>"
   And add the category "<CN5>"
-  #And update the category "<CN1>"
+  And update the category "<CN1>"
   Then navigate to the departments
   And add the department "<DN1>" "<FN>" "<DC1>" "<DL1>"
   And add the department "<DN2>" "<FN>" "<DC2>" "<DL1>"
@@ -72,7 +72,7 @@ Feature: Login the UMS
   And add the user "<RN3>" "<Email8>"
   And add the user "<RN4>" "<Email9>"
   And Navigate to the Assign MenuItems Permisisons
-  #Then add the Assign MenuItems Permisisons "<RN1>" "<ASN1>"
+  Then add the Assign MenuItems Permisisons "<RN1>" "<ASN1>"
   Then Update the Assign MenuItems Permisisons "<ASN1>" "<ASN2>"
   Then navigate to the company details
   And add the company details
