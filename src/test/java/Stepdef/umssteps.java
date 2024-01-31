@@ -427,9 +427,6 @@ public class umssteps {
 	@Then("user enter the profile icon button")
 	public void user_enter_the_profile_icon_button() throws InterruptedException {
 		vc.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		vc.findElement(By.xpath("//div[contains(text(),'Overview')]")).click();
-		Thread.sleep(4000);
-		test1.pass(MarkupHelper.createLabel("Overview page", ExtentColor.GREEN)).info("overview page").addScreenCaptureFromBase64String(Capsre());
 		Thread.sleep(4000);
 		try {
 			Thread.sleep(4000);
