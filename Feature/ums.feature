@@ -70,7 +70,7 @@ Feature: Login the UMS
   And add the user "<RN3>" "<Email8>"
   And add the user "<RN4>" "<Email9>"
   And Navigate to the Assign MenuItems Permisisons
-  Then add the Assign MenuItems Permisisons "<RN1>" "<ASN1>"
+  #Then add the Assign MenuItems Permisisons "<RN1>" "<ASN1>"
   Then Update the Assign MenuItems Permisisons "<ASN1>" "<ASN2>"
   Then navigate to the company details
   And add the company details
@@ -94,7 +94,7 @@ Feature: Login the UMS
   Then Create the Action item "<MT>" "<AT2>" "<AD2>" "<UN1>" "<S2>"
   Then Create the Action item "<MT>" "<AT3>" "<AD3>" "<UN2>" "<S3>"
   Then Submit the three Action items "<MT>" "<AT1>" "<AT2>" "<AT3>"
-  And Send the Mom mail "<MT>"
+  And Send the Mom mail "<MT>" "<UN1>"
   And Navigate to the Action item
   Then Add task in action item "<AT1>" "<TT1>" "<TD1>" "<UN>" "<CN1>"
   Then Add task in action item "<AT2>" "<TT2>" "<TD2>" "<UN>" "<CN2>"

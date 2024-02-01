@@ -501,8 +501,8 @@ public class umssteps {
 		// vc.close();
 	}
 
-	@And("Send the Mom mail {string}")
-	public void Send_the_Mom_mail(String Mt) throws InterruptedException {
+	@And("Send the Mom mail {string} {string}")
+	public void Send_the_Mom_mail(String Mt,String UN) throws InterruptedException {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//div[contains(text(),'Meetings')]")).click();
 		// vc.navigate().refresh();
@@ -516,10 +516,10 @@ public class umssteps {
 		Thread.sleep(4000);
 		try {
 			vc.findElement(By.xpath(
-					"//span[contains(@class,'ng-option-label')][normalize-space()='venkatesh.udaru@ikcontech.com']"))
+					"//span[contains(@class,'ng-option-label')][normalize-space()='"+UN+"']"))
 					.click();
 		} catch (Exception e) {
-			vc.findElement(By.xpath("//span[normalize-space()='venkatesh.udaru@ikcontech.com']")).click();
+			vc.findElement(By.xpath("//span[normalize-space()='"+UN+"']")).click();
 		}
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//textarea[@placeholder='Enter discussion points !...']"))
