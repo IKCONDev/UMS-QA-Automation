@@ -88,7 +88,7 @@ Feature: Login the UMS
   When user enter the submit button
   And user clear the authentication
   Then User enter the meeting button
-  Then Create the manual meeting "<MT>"
+  Then Create the manual meeting "<MT>" "<UN2>"
   Then Create the Action item "<MT>" "<AT1>" "<AD1>" "<UN1>" "<S2>"
   And Update the first Action item "<MT>" "<AT1>" "<AD1>" "<UN2>" "<S1>"
   Then Create the Action item "<MT>" "<AT2>" "<AD2>" "<UN1>" "<S2>"

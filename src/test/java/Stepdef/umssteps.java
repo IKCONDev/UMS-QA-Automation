@@ -158,8 +158,8 @@ public class umssteps {
 		test1.pass(MarkupHelper.createLabel("Meetings Page", ExtentColor.GREEN)).info("Website opended").addScreenCaptureFromBase64String(Capsre());
 	}
 
-	@Then("Create the manual meeting {string}")
-	public void create_the_manual_meeting(String mt) throws InterruptedException {
+	@Then("Create the manual meeting {string} {string}")
+	public void create_the_manual_meeting(String mt,String UN) throws InterruptedException {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//i[@data-toggle='modal']")).click();// create meet
 		test1.pass(MarkupHelper.createLabel("create meeting", ExtentColor.GREEN)).info("Manual Meeting").addScreenCaptureFromBase64String(Capsre());
@@ -176,7 +176,7 @@ public class umssteps {
 		vc.findElement(By.xpath("//ng-select[@id='meetingAttendees']//input[@type='text']")).click();// attendees
 		test1.pass(MarkupHelper.createLabel("Attendee selected", ExtentColor.GREEN)).info("attendee").addScreenCaptureFromBase64String(Capsre());
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//span[normalize-space()='subramanian.a@ikcontech.com']")).click();
+		vc.findElement(By.xpath("//span[normalize-space()='"+UN+"']")).click();
 		test1.pass(MarkupHelper.createLabel("Attendee selected", ExtentColor.GREEN)).info("attendee").addScreenCaptureFromBase64String(Capsre());		
 		vc.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		Thread.sleep(4000);
