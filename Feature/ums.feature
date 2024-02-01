@@ -1,9 +1,7 @@
 @tag
 Feature: Login the UMS
 
-  Scenario Outline: Admin settings
-  Meta-data: {"dataFile":"resources/data/logintestdata.csv"}
-  
+  Scenario Outline: Admin settings  
   Given user open the url "http://localhost:4200/#/"
   Then user enter the "<UN>" and "<PW>"
   When user enter the submit button
