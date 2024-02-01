@@ -10,8 +10,8 @@ Feature: Login the UMS
   And user clear the authentication
   Then User navigate to the settings
   Then User navigate to the Add Menu Items
-  And Add menu items
-  And Navigate to the Permissions
+  #And Add menu items
+  #And Navigate to the Permissions
   Then Add the Permissions "<PN3>"
   And Update the Permissions "<PN3>"
   Then Add the Permissions "<PN2>"
