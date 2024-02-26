@@ -16,6 +16,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -27,9 +28,7 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-//import com.thoughtworks.selenium.Wait;
 import com.aventstack.extentreports.reporter.configuration.ViewName;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -94,7 +93,21 @@ public class umssteps {
 
 	@Given("user open the url {string}")
 	public void user_open_the_url(String string) { 
+		
 		WebDriverManager.chromedriver().setup();
+//		ChromeOptions options = new ChromeOptions();
+//	  // options.setHeadless(true);
+////	    options.addArguments("start-maximized"); // open Browser in maximized mode
+////	    options.addArguments("disable-infobars"); // disabling infobars
+////	    options.addArguments("--disable-extensions"); // disabling extensions
+////	    options.addArguments("--disable-gpu"); // applicable to Windows os only
+////	    options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
+////	    options.addArguments("--no-sandbox"); // Bypass OS security model
+////	    options.addArguments("--disable-in-process-stack-traces");
+////	    options.addArguments("--disable-logging");
+////	    options.addArguments("--log-level=3");
+//	    options.addArguments("--remote-allow-origins=*");
+ System.setProperty("webdriver.chrome.driver", "C:\\Users\\VenkateshUdaru\\eclip\\UMSAPP\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
 		vc = new ChromeDriver();
 		wait = new WebDriverWait(vc, Duration.ofSeconds(2));
 		// lp=new UMSOBJ(vc);
@@ -158,7 +171,7 @@ public class umssteps {
 		test1.pass(MarkupHelper.createLabel("Meetings Page", ExtentColor.GREEN)).info("Website opended").addScreenCaptureFromBase64String(Capsre());
 	}
 
-	@Then("Create the manual meeting {string} {string}")
+	@Then("Create the manual meeting {string} {string}") 
 	public void create_the_manual_meeting(String mt,String UN) throws InterruptedException {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//i[@data-toggle='modal']")).click();// create meet
@@ -310,7 +323,7 @@ public class umssteps {
 				By.xpath("//td[normalize-space()='" + At + "']/following::td//button[normalize-space()='Add Task']"))
 				.click();// add task
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//textarea[@placeholder='Enter title']")).sendKeys(Tt);
+		vc.findElement(By.xpath("//textarea[@placeholder='Enter Title']")).sendKeys(Tt);
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//textarea[@placeholder='Enter description']")).sendKeys(TD);
 		Thread.sleep(4000);
@@ -522,7 +535,7 @@ public class umssteps {
 			vc.findElement(By.xpath("//span[normalize-space()='"+UN+"']")).click();
 		}
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//textarea[@placeholder='Enter discussion points !...']"))
+		vc.findElement(By.xpath("//textarea[@placeholder='Enter Discussion Points']"))
 				.sendKeys("Automation Testing the MOM");// description
 		test1.pass(MarkupHelper.createLabel("send mom details", ExtentColor.GREEN)).info("send momm details").addScreenCaptureFromBase64String(Capsre());
 		vc.findElement(By.xpath("//button[@id='sendMomEmail']")).click();// send Mail
@@ -551,14 +564,23 @@ public class umssteps {
 	public void user_enter_getotp_button() throws InterruptedException {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//button[normalize-space()='Get OTP']")).click();
+		Thread.sleep(10000);
 
 	}
 
 	@Then("user enter the OTP")
-	public void user_enter_the_otp() {
+	public void user_enter_the_otp() throws InterruptedException {
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		String otp = sc.next();
+//		
+//		for (int i=1;i<100;i++) {
+//			WebElement fp =vc.findElement(By.xpath("//input[@id='otp']"));
+//			fp.clear();fp.clear();fp.sendKeys("1");
+//			Thread.sleep(2000);
+//			vc.findElement(By.xpath("//button[normalize-space()='Verify']")).click();
+//			i++;
+//		}
 		vc.findElement(By.xpath("//input[@id='otp']")).sendKeys(otp);
 		test1.pass(MarkupHelper.createLabel("OTP entered", ExtentColor.GREEN)).info("OTP details").addScreenCaptureFromBase64String(Capsre());
 	}
@@ -1425,7 +1447,7 @@ public class umssteps {
 	@Then("Task Items Severity")
 	public void task_items_severity() throws InterruptedException {
 		vc.findElement(By.xpath("//div[normalize-space()='Reports']")).click();
-		vc.findElement(By.xpath("//a[normalize-space()='Severity']")).click();
+		vc.findElement(By.xpath("(//a[normalize-space()='Priority'])[2]")).click();
 		Thread.sleep(1000);
 		test1.pass(MarkupHelper.createLabel("Task Items Severity", ExtentColor.GREEN)).info("Task Items Severity").addScreenCaptureFromBase64String(Capsre());
 
