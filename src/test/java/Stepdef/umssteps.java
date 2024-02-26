@@ -131,7 +131,7 @@ public class umssteps {
 	@When("user enter the submit button")
 	public void user_enter_the_submit_button() {
 		vc.findElement(By.xpath("//button[contains(text(),'Login')]")).click();
-		vc.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		vc.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		try {
 			String Toast=vc.findElement(By.xpath("//div[@role='alert']")).getText();
 			System.out.println(Toast);}catch (Exception e) {
@@ -325,7 +325,7 @@ public class umssteps {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//textarea[@placeholder='Enter Title']")).sendKeys(Tt);
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("//textarea[@placeholder='Enter description']")).sendKeys(TD);
+		vc.findElement(By.xpath("//textarea[@placeholder='Enter Description']")).sendKeys(TD);
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//ng-select[@id='taskOwner']//input[@type='text']")).click();// assginee
 		Thread.sleep(4000);
@@ -335,7 +335,7 @@ public class umssteps {
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//ng-select[@id='taskCategory']//input[@type='text']")).click();
 		Thread.sleep(3000);
-		vc.findElement(By.xpath("//span[normalize-space()='"+CN+"']")).click();
+		vc.findElement(By.xpath("//span[contains(text(),'"+CN+"')]")).click();////span[contains(text(),'Sales')]
 		Thread.sleep(3000);
 		test1.pass(MarkupHelper.createLabel("task details", ExtentColor.GREEN)).info("task details").addScreenCaptureFromBase64String(Capsre());
 		Thread.sleep(4000);
