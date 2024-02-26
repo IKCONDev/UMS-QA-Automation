@@ -141,7 +141,7 @@ public class umssteps {
 
 	@When("user clear the authentication")
 	public void user_clear_the_authentication() {
-		vc.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		//vc.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		try {
 			vc.findElement(By.xpath("//label[@id='authHeading']"));
 			vc.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -371,15 +371,15 @@ public class umssteps {
 		vc.findElement(By.xpath("//td[normalize-space()='" + Tt1 + "']/following-sibling::td//button[@id='editIcon']"))
 				.click();
 		Thread.sleep(4000);
-		WebElement TT = vc.findElement(By.xpath("//textarea[@placeholder='Enter title']"));//textarea[@placeholder='Enter title']
+		WebElement TT = vc.findElement(By.xpath("//textarea[@id='addTaskTitle']"));//textarea[@placeholder='Enter title']
 		TT.clear();
 		TT.sendKeys(UTT);
 		Thread.sleep(4000);
-		WebElement TD = vc.findElement(By.xpath("//textarea[@placeholder='Enter description']"));
+		WebElement TD = vc.findElement(By.xpath("//textarea[@id='addTaskDescription']"));
 		TD.clear();
 		TD.sendKeys(UTD);
 		Thread.sleep(4000);
-		vc.findElement(By.xpath("(//ng-select[@id='taskOwner']//input[@type='text'])[1]")).click();
+		vc.findElement(By.xpath("//ng-select[@id='addTaskOwner']//input[@type='text']")).click();
 		Thread.sleep(4000);
 		try {
 			vc.findElement(By.xpath("//span[normalize-space()='" + UN + "']")).click();
@@ -388,15 +388,15 @@ public class umssteps {
 					.click();
 		}
 		Thread.sleep(4000);
-		Select Cat = new Select(vc.findElement(By.xpath("//select[@id='taskCategory']")));
+		Select Cat = new Select(vc.findElement(By.xpath("//select[@id='addTaskCategory']")));
 		Thread.sleep(5000);
 		Cat.selectByVisibleText(CN);
 		Thread.sleep(4000);
-		Select pri1 = new Select(vc.findElement(By.xpath("(//select[@name='taskPriority'])[1]")));// priority
+		Select pri1 = new Select(vc.findElement(By.xpath("//select[@id='addTaskPriority']")));// priority
 		Thread.sleep(4000);
 		pri1.selectByVisibleText("High");
 		Thread.sleep(10000);
-		Select status = new Select(vc.findElement(By.xpath("//select[@placeholder='select']")));
+		Select status = new Select(vc.findElement(By.xpath("//select[@id='addtaskStatus']")));
 		status.selectByVisibleText("Yet to start");
 		
 		Thread.sleep(4000);
