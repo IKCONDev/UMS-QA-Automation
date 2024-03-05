@@ -16,7 +16,6 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -65,8 +64,6 @@ public class umssteps {
 		String bs4 = takes.getScreenshotAs(OutputType.BASE64);
 		System.out.println("screenshot saved successfuly");
 		return bs4;
-
-		// Xl.generateReport("excel-report.xlsx");
 	}
 
 	@After
@@ -95,19 +92,7 @@ public class umssteps {
 	public void user_open_the_url(String string) { 
 		
 		WebDriverManager.chromedriver().setup();
-//		ChromeOptions options = new ChromeOptions();
-//	  // options.setHeadless(true);
-////	    options.addArguments("start-maximized"); // open Browser in maximized mode
-////	    options.addArguments("disable-infobars"); // disabling infobars
-////	    options.addArguments("--disable-extensions"); // disabling extensions
-////	    options.addArguments("--disable-gpu"); // applicable to Windows os only
-////	    options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
-////	    options.addArguments("--no-sandbox"); // Bypass OS security model
-////	    options.addArguments("--disable-in-process-stack-traces");
-////	    options.addArguments("--disable-logging");
-////	    options.addArguments("--log-level=3");
-//	    options.addArguments("--remote-allow-origins=*");
- System.setProperty("webdriver.chrome.driver", "C:\\Users\\VenkateshUdaru\\eclip\\UMSAPP\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
 		vc = new ChromeDriver();
 		wait = new WebDriverWait(vc, Duration.ofSeconds(2));
 		// lp=new UMSOBJ(vc);
@@ -141,17 +126,13 @@ public class umssteps {
 
 	@When("user clear the authentication")
 	public void user_clear_the_authentication() {
-		//vc.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		try {
 			vc.findElement(By.xpath("//label[@id='authHeading']"));
 			vc.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			vc.findElement(By.xpath("//input[@type='radio']")).click();
 			test1.pass(MarkupHelper.createLabel("radio button", ExtentColor.GREEN)).info("Website opended").addScreenCaptureFromBase64String(Capsre());
-			// r1.click();
 			Thread.sleep(4000);
-			// vc.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 			vc.findElement(By.xpath("//button[contains(text(),'Get OTP')]")).click();
-			// Thread.sleep(50000);
 			@SuppressWarnings("resource")
 			Scanner sc = new Scanner(System.in);
 			String otp = sc.next();
@@ -330,8 +311,6 @@ public class umssteps {
 		vc.findElement(By.xpath("//ng-select[@id='taskOwner']//input[@type='text']")).click();// assginee
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//span[@class='ng-option-label'][normalize-space()='" + UN + "']")).click();
-		// Thread.sleep(4000);
-		// vc.findElement(By.xpath("//select[@id='taskCategory']")).click();
 		Thread.sleep(4000);
 		vc.findElement(By.xpath("//ng-select[@id='taskCategory']//input[@type='text']")).click();
 		Thread.sleep(3000);
@@ -511,7 +490,6 @@ public class umssteps {
 		vc.findElement(By.xpath("//button[@id='logoutRef']")).click();//// button[@id='logoutRef']
 		test1.pass(MarkupHelper.createLabel("logouted the application", ExtentColor.GREEN)).info("logout").addScreenCaptureFromBase64String(Capsre());
 		Thread.sleep(4000);
-		// vc.close();
 	}
 
 	@And("Send the Mom mail {string} {string}")
