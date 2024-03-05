@@ -92,7 +92,7 @@ public class umssteps {
 	public void user_open_the_url(String string) { 
 		
 		WebDriverManager.chromedriver().setup();
-		System.setProperty("webdriver.chrome.driver", "chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "driver\\chromedriver.exe");
 		vc = new ChromeDriver();
 		wait = new WebDriverWait(vc, Duration.ofSeconds(2));
 		// lp=new UMSOBJ(vc);
