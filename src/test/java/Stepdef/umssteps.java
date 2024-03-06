@@ -404,10 +404,14 @@ public class umssteps {
 		try {
 			vc.switchTo().alert().accept();
 		} catch (Exception e) {
-		}
+			vc.navigate().refresh();		}
 		Thread.sleep(10000);
+		try {
 		vc.findElement(By.xpath("//td[contains(text(),'" + Tt1 + "')]/following-sibling::td//button[@id='editIcon']"))
-				.click();
+				.click();}catch (Exception e) {
+				
+		vc.findElement(By.xpath("//td[contains(text(),'Patch Servers')]/following-sibling::td//button[@id='editIcon']"))
+		.click();}//Prepare Sprint Demo}
 		Thread.sleep(4000);
 		Select status = new Select(vc.findElement(By.xpath("(//select[@name='taskStatus'])[2]")));
 		status.selectByVisibleText("Inprogress");// Yet to start //Inprogress //Completed
@@ -439,9 +443,9 @@ public class umssteps {
 		Thread.sleep(3000); 
 		vc.findElement(By.xpath("//div[contains(text(),'Overview')]")).click();
 		test1.pass(MarkupHelper.createLabel("overview", ExtentColor.GREEN)).info("overview").addScreenCaptureFromBase64String(Capsre());
-		Thread.sleep(3000);
+		Thread.sleep(4000);
 		vc.findElement(By.xpath("(//input[@type='text'])[1]")).click();
-		Thread.sleep(3000);
+		Thread.sleep(4000);
 		vc.findElement(By.xpath("//span[normalize-space()='Total']")).click();//Yet to start//Inprogress//Completed
 		test1.pass(MarkupHelper.createLabel("overview", ExtentColor.GREEN)).info("overview").addScreenCaptureFromBase64String(Capsre());
 		Thread.sleep(3000);

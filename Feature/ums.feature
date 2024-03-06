@@ -99,7 +99,7 @@ Feature: Login the UMS
     And Navigate to the Action item
     Then Add task in action item "<AT1>" "<TT1>" "<TD1>" "<UN>" "<CN1>"
     Then Add task in action item "<AT2>" "<TT2>" "<TD2>" "<UN>" "<CN2>"
-    Then Add task in action item "<AT3>" "<TT3>" "<TD3>" "<UN>" "<CN3>"
+    Then Add task in action item "<AT3>" "<TT3>" "<TD3>" "<UN>" "<CN2>"
     Then Navigate to Task and Edit the task in Organizer "<TT1>" "<TT1>" "<TD1>" "<UN>" "<CN2>"
     And Update the Task in Assignee "<TT1>"
     And Overview
@@ -111,7 +111,7 @@ Feature: Login the UMS
 
     Examples: 
       | S1   | S2     | S3  | UN                            | UN1                           | UN2                           | PW       | MT                | AT1             | AD1                    | AT2               | AD2               | AT3          | AD3                 | TT1                | TD1                      | TT2                      | TD2                                 | TT3               | TD3                              | UTT                | UTD                      | CN1      | CN2            | CN3       |
-      | High | Medium | Low | venkatesh.udaru@ikcontech.com | praveenreddy.g@ikcontech.com  | samyuktha.r@ikcontech.com     | Test@123 | UMS AUtomation    | qa server setup | Qa server installation | Devops operations | Devops operations | Scrum Status | scrum status report | Regression testing | Dialy Regression testing | Developing the Operation | Developing the Operation of Product | Developmet Update | Development update today         | Monkey testing     | Monkey testing status    | Sales    | Sales          | External  |
+      | High | Medium | Low | venkatesh.udaru@ikcontech.com | praveenreddy.g@ikcontech.com  | samyuktha.r@ikcontech.com     | Test@123 | UMS AUtomation    | qa server setup | Qa server installation | Devops operations | Devops operations | Scrum Status | scrum status report | Regression testing | Dialy Regression testing | Developing the Operation | Developing the Operation of Product | Developmet Update | Development update today         | Monkey testing     | Monkey testing status    | Sales   | Sales          | External  |
       | High | Medium | Low | praveenreddy.g@ikcontech.com  | venkatesh.udaru@ikcontech.com | samyuktha.r@ikcontech.com     | Test@123 | Automation of UMS | qa server setup | Qa server installation | Devops operations | Devops operations | Scrum Status | scrum status report | Sanity testing     | Initial Sanity testing   | Updating the Developing  | Updating the Developing of Product  | Bug Update        | Bug Update today                 | Regression testing | Dialy Regression testing | External | Technical      | Risk      |
       | High | Medium | Low | samyuktha.r@ikcontech.com     | praveenreddy.g@ikcontech.com  | venkatesh.udaru@ikcontech.com | Test@123 | Scrum Meeting     | qa server setup | Qa server installation | Devops operations | Devops operations | Scrum Status | scrum status report | Smoke testing      | Initial Smoke tesing     | Checking the Developing  | Checking the Developing of Product  | Product Update    | Prdouct current completed update | Smoke testing      | Initial Smoke tesing     | Risk     | Organizational | Technical |
 
@@ -154,7 +154,7 @@ Feature: Login the UMS
 
     Examples: 
       | UN                            | UN1                          | UN2                       | PW       | vn        | vn1     | vn2       | d1                     | d2             | d3      | p1   | p2     | p3  | s1           | s2         | s3        | c1             | c2       | c3   | c4                 | c5        |
-      | venkatesh.udaru@ikcontech.com | praveenreddy.g@ikcontech.com | sasirekha.t@ikcontech.com | Test@123 | Venkatesh | Praveen | Samyuktha | Information Technology | Human Resource | Finance | High | Medium | Low | Yet to start | Inprogress | Completed | Organizational | External | Risk | Project Management | Technical |
+      | venkatesh.udaru@ikcontech.com | praveenreddy.g@ikcontech.com | sasirekha.t@ikcontech.com | Test@123 | Venkatesh | Praveen | Samyuktha | Information Technology | Human Resource | Finance | High | Medium | Low | Yet to start | Inprogress | Completed | Sales | External | Risk | Project Management | Technical |
 
   @fp
   Scenario Outline: forgot password
